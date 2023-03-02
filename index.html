@@ -11,13 +11,95 @@
   <script defer type="text/javascript" src="./index.js"></script>
 
   
-  <title>Quiz App with LaTeX rendering</title>
+  <title>Adding Fractions Calculator (step-by-step)</title>
 
 </head>
 <body>
   <noscript>
     You need to enable JavaScript to use this app
   </noscript>
+
+  <!-- User input section -->
+
+  <section>
+    <h1>Adding Fractions Calculator</h1>
+
+    <div class="input-inner-container">
+
+      <!-- Select number of fractions -->
+      <h2>How many fractions?</h2>
+      <div class="fraction-num-container">
+        <button id="twoFractions" onclick="twoFractions()" class="button-on">2</button> 
+        <button id="threeFractions" onclick="threeFractions()" class="button-off">3</button>
+        <button id="fourFractions" onclick="fourFractions()" class="button-off">4</button>
+      </div>
+
+      <!-- Enter fractions, change signs -->
+      <div class="fractions-input-container">
+        <div class="simple-fraction fraction1">
+          <input id="inputNum1" type="number" class="input-fraction" placeholder="">
+          <br>
+          <input id="inputDen1" type="number" class="input-fraction black-line" placeholder="">
+        </div> 
+        <div class="select-sign"> 
+          <select name="+" id="symbol1">
+            <option value="+">+</option>
+            <option value="-">-</option>
+          </select>
+        </div>  
+        <div class="simple-fraction fraction2">
+          <input id="inputNum2" type="number" class="input-fraction" placeholder="">
+          <br>
+          <input id="inputDen2" type="number" class="input-fraction black-line" placeholder="">
+        </div>
+        <div class="select-sign"> 
+          <select name="+" id="symbol2">
+            <option value="+">+</option>
+            <option value="-">-</option>
+          </select>
+        </div> 
+        <div class="simple-fraction fraction3">
+          <input id="inputNum3" type="number" class="input-fraction" placeholder="">
+          <br>
+          <input id="inputDen3" type="number" class="input-fraction black-line" placeholder="">
+        </div>
+        <div class="select-sign"> 
+          <select name="+" id="symbol3">
+            <option value="+">+</option>
+            <option value="-">-</option>
+          </select>
+        </div>
+        <div class="simple-fraction fraction4">
+          <input id="inputNum4" type="number" class="input-fraction" placeholder="">
+          <br>
+          <input id="inputDen4" type="number" class="input-fraction black-line" placeholder="">
+        </div>
+      </div>
+
+      <!-- Add, Clear buttons -->
+      <div class="container-btns">
+        <button onclick="addBtn()" class="calculateBtn">Add</button>
+      <button onclick="clearValues()" class="clearBtn">Clear</button>
+      </div>
+      </div>
+    </section>
+
+    <!-- Direct answer displayed here -->
+    <section>
+      <div class="outup-inner-container">
+        <h2>Answer:</h2>
+      <div class="solution-text"><span id="finalSolution">-</span></div>
+      </div>
+    </section>
+
+    <!-- Step-by-step solution displayed here -->
+    <section>
+      <div class="output-inner-container">
+        <h2>Step-by-step solution:</h2>
+        <div class="solution-text"><span id="calculation">-</span></div>
+      </div>
+    </section>
+  
   
 </body>
 </html>
