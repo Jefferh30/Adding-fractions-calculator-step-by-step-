@@ -10,6 +10,19 @@
   <!-- Calculator Code -->
   <script defer type="text/javascript" src="./index.js"></script>
 
+  <!-- Configuration for MathJax inline rendering-->
+  <script>
+    MathJax = { 
+      tex: {
+        inlineMath: [['$latex', '$'], ['\\(', '\\)']]
+      },
+    };
+    </script>
+  
+  <!-- Importing MathJax-->
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script id="MathJax-script" defer src="https://cdn.jsdelivr.net/npm/mathjax@3.0.1/es5/tex-chtml.js"></script>
+
   
   <title>Adding Fractions Calculator (step-by-step)</title>
 
@@ -21,7 +34,7 @@
 
   <!-- User input section -->
 
-  <section>
+  <section class="user-input">
     <h1>Adding Fractions Calculator</h1>
 
     <div class="input-inner-container">
@@ -78,15 +91,15 @@
 
       <!-- Add, Clear buttons -->
       <div class="container-btns">
-        <button onclick="addBtn()" class="calculateBtn">Add</button>
-      <button onclick="clearValues()" class="clearBtn">Clear</button>
+        <button onclick="addBtn()" class="calculate-btn">Add</button>
+      <button onclick="clearValues()" class="clear-btn">Clear</button>
       </div>
       </div>
     </section>
 
     <!-- Direct answer displayed here -->
     <section>
-      <div class="outup-inner-container">
+      <div class="output-inner-container">
         <h2>Answer:</h2>
       <div class="solution-text"><span id="finalSolution">-</span></div>
       </div>
