@@ -1,10 +1,10 @@
 //functions to find the least common multiple
-function gcd(a, b) {
+const gcd = (a, b) => {
     if (b == 0) return a;
     return gcd(b, a % b);
 }
 
-function findlcm(arr, n) {
+const findlcm = (arr, n) => {
     let ans = arr[0];
     for (let i = 1; i < n; i++) ans = (((arr[i] * ans)) / (gcd(arr[i], ans)));
     return ans;
@@ -13,74 +13,36 @@ function findlcm(arr, n) {
 //initializing with 2 fractions
 let numberFractions = 2;
 
-//shows 2 fractions, hides fractions 3 and 4
-function twoFractions() {
-    let fraction3 = document.getElementsByClassName("fraction3");
-    let fraction4 = document.getElementsByClassName("fraction4");
-    let symbolAction2 = document.getElementById("symbol2");
-    let symbolAction3 = document.getElementById("symbol3");
-    fraction3[0].style.display = "none";
-    fraction4[0].style.display = "none";
-    symbolAction2.style.display = "none";
-    symbolAction3.style.display = "none";
-    var Button1 = document.getElementById('twoFractions');
-    Button1.classList.add('button-on');
-    Button1.classList.remove('button-off');
-    var Button2 = document.getElementById('threeFractions');
-    Button2.classList.add('button-off');
-    Button2.classList.remove('button-on');
-    var Button3 = document.getElementById('fourFractions');
-    Button3.classList.add('button-off');
-    Button3.classList.remove('button-on');
-    numberFractions = 2;
-}
+//shows selected number of fractions
+const fractionsNumber = (howMany) => {
+    const fraction3 = document.getElementsByClassName("fraction3");
+    const fraction4 = document.getElementsByClassName("fraction4");
+    const symbolAction2 = document.getElementById("symbol2");
+    const symbolAction3 = document.getElementById("symbol3");
+    const Button1 = document.getElementById('twoFractions');
+    const Button2 = document.getElementById('threeFractions');
+    const Button3 = document.getElementById('fourFractions');
 
-//shows 3 fractions, hides fraction #4
-function threeFractions() {
-    let fraction3 = document.getElementsByClassName("fraction3");
-    let fraction4 = document.getElementsByClassName("fraction4");
-    let symbolAction2 = document.getElementById("symbol2");
-    let symbolAction3 = document.getElementById("symbol3");
-    fraction3[0].style.display = "block";
-    fraction4[0].style.display = "none";
-    symbolAction2.style.display = "block";
-    symbolAction3.style.display = "none";
-    var Button1 = document.getElementById('twoFractions');
-    Button1.classList.add('button-off');
-    Button1.classList.remove('button-on');
-    var Button2 = document.getElementById('threeFractions');
-    Button2.classList.add('button-on');
-    Button2.classList.remove('button-off');
-    var Button3 = document.getElementById('fourFractions');
-    Button3.classList.add('button-off');
-    Button3.classList.remove('button-on');
-    numberFractions = 3;
+    //getting number of fractions
+    numberFractions = parseInt(howMany);
+
+    //displaying or hiding fractions and symbols
+    fraction3[0].style.display = numberFractions >= 3 ? "block" : "none";
+    fraction4[0].style.display = numberFractions === 4 ? "block" : "none";
+    symbolAction2.style.display = numberFractions >= 3 ? "block" : "none";
+    symbolAction3.style.display = numberFractions === 4 ? "block" : "none";
+
+    //adding or removing a css class on button that selects number of fractions 
+    Button1.classList.toggle('button-on', numberFractions === 2);
+    Button1.classList.toggle('button-off', numberFractions !== 2);
+    Button2.classList.toggle('button-on', numberFractions === 3);
+    Button2.classList.toggle('button-off', numberFractions !== 3);
+    Button3.classList.toggle('button-on', numberFractions === 4);
+    Button3.classList.toggle('button-off', numberFractions !== 4);
 }
 
 
-//shows all fractions
-function fourFractions() {
-    let fraction3 = document.getElementsByClassName("fraction3");
-    let fraction4 = document.getElementsByClassName("fraction4");
-    let symbolAction2 = document.getElementById("symbol2");
-    let symbolAction3 = document.getElementById("symbol3");
-    fraction3[0].style.display = "block";
-    fraction4[0].style.display = "block";
-    symbolAction2.style.display = "block";
-    symbolAction3.style.display = "block";
-    var Button1 = document.getElementById('twoFractions');
-    Button1.classList.add('button-off');
-    Button1.classList.remove('button-on');
-    var Button2 = document.getElementById('threeFractions');
-    Button2.classList.add('button-off');
-    Button2.classList.remove('button-on');
-    var Button3 = document.getElementById('fourFractions');
-    Button3.classList.add('button-on');
-    Button3.classList.remove('button-off');
-    numberFractions = 4;
-}
-
-function addBtn() {
+const addBtn = () => {
     // getting numerators and denominators of the four fractions
     let inputNum1 = parseFloat(document.getElementById("inputNum1").value);
     let inputDen1 = parseFloat(document.getElementById("inputDen1").value);
@@ -265,7 +227,7 @@ function addBtn() {
 }
 
 
-function clearValues() {
+const clearValues = () => {
     document.getElementById("inputNum1").value = "";
     document.getElementById("inputDen1").value = "";
     document.getElementById("inputNum2").value = "";
