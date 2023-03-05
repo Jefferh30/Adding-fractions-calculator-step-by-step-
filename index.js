@@ -155,10 +155,10 @@ const addBtn = () => {
 
         //show step by step solution
         //when 3 or 4 fractions
-        let step2_3F;
-        let step4_3F;
-        let step6_3F;
-        let step8_3F;
+        let step2_3F = "";
+        let step4_3F = "";
+        let step6_3F = "";
+        let step8_3F = "";
         
         if (numberFractions === 3) {
             step2_3F = `${symbol2} \\frac{${Math.abs(inputNum3)}}{${inputDen3}}`;
@@ -213,7 +213,7 @@ const addBtn = () => {
     }
     document.getElementById("calculation").innerHTML = `${finalAnswer}${simplified}`;
     document.getElementById("finalSolution").innerHTML = `${finalSolution}`;
-    renderMathInElement(document.body, katexops);
+    MathJax.typeset();
 }
 
 
