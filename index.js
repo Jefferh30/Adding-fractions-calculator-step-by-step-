@@ -110,17 +110,42 @@ const addBtn = () => {
         }
 
 
+        // Make calculations for LCM, new numerators, result, and simplified version
+        let denominators = [inputDen1, inputDen2];
+        let numerators = [inputNum1, inputNum2];
+        let lcm;
+        let multiples = [];
+        let newNumerators = [];
+        let numeratorFinal = 0;
+
+        // add the denominators and numerators of fractions to the array depending on selected number
+        if (numberFractions >= 3) {
+            denominators.push(inputDen3);
+            numerators.push(inputNum3);
+        }
+        if (numberFractions >= 4) {
+            denominators.push(inputDen4);
+            numerators.push(inputNum4);
+        }
+        // find the LCM of all the denominators
+        lcm = findlcm(denominators, numberFractions);
+
+        // Divide LCM by each denominator, multiply that by numerator and add new numerators
+        for (let i = 0; i < numberFractions; i++) {
+            multiples.push(lcm / denominators[i]);
+            newNumerators.push(multiples[i] * numerators[i]);
+            numeratorFinal += newNumerators[i];
+        }
+
+        // simplify the final fraction
+        const gcdFinal = Math.abs(gcd(numeratorFinal, lcm));
+        const numFinal = numeratorFinal / gcdFinal;
+        const denFinal = lcm / gcdFinal;
+
+
+        // Make calculations of common denominator, new numerators, and final result
         if (numberFractions === 2) {
 
-            let lcm2 = findlcm([parseFloat(inputDen1), parseFloat(inputDen2)], 2);
-            let multiple1 = lcm2 / parseFloat(inputDen1);
-            let multiple2 = lcm2 / parseFloat(inputDen2);
-            let numerator1 = multiple1 * parseFloat(inputNum1);
-            let numerator2 = multiple2 * parseFloat(inputNum2);
-            let numeratorFinal = parseFloat(numerator1) + parseFloat(numerator2);
-            let gcdFinal = Math.abs(gcd(numeratorFinal, lcm2));
-            let numFinal = numeratorFinal / gcdFinal;
-            let denFinal = lcm2 / gcdFinal;
             if (numeratorFinal < 0) {
                 simplified = `<p>Simplifying the fraction, we have:</p><p>$$=-\\frac{${Math.abs(numFinal)}}{${denFinal}}$$</p>`
                 finalSolution = `<p style="font-size:20px;">$$=-\\frac{${Math.abs(numFinal)}}{${denFinal}}$$</p>`
@@ -130,8 +155,8 @@ const addBtn = () => {
             if (gcdFinal > 1 && numeratorFinal > 0) {
                 simplified = `<p>Simplifying the fraction, we have:</p><p>$$=\\frac{${Math.abs(numFinal)}}{${denFinal}}$$</p>`
             }
-            let answerHeter = `${step1}<p>$$=\\frac{${inputNum1}}{${inputDen1}} ${symbol1} \\frac{${Math.abs(inputNum2)}}{${inputDen2}}$$</p><p>We have heterogeneous denominators, so we have to find the <a href="https://www.mechamath.com/calculators/least-common-multiple-calculator-mcm/" target="_blank">least common denominador (LCD)</a>.</p><p>In this case, the LCD is ${lcm2}</p><p>Now, we multiply both the numerator and denominator by a number that makes the denominator equal to the LCD.</p><p>$$=\\frac{${inputNum1}\\times  ${multiple1}}{${inputDen1}\\times ${multiple1} }${symbol1}\\frac{${Math.abs(inputNum2)}\\times  ${multiple2}}{${inputDen2}\\times ${multiple2}}$$</p><p>Multiplying and writing the fractions in simple form, we have:</p><p>$$=\\frac{${numerator1}}{${lcm2}}${symbol1}\\frac{${Math.abs(numerator2)}}{${lcm2}}$$</p>`;
-            let answerHomo = `<p>Since we have like denominators, we can join the fractions and add them easily:</p><p>$$=\\frac{${numerator1}${symbol1}${Math.abs(numerator2)}}{${lcm2}}$$</p><p>$$=\\frac{${numeratorFinal}}{${lcm2}}$$</p>`
+            let answerHeter = `${step1}<p>$$=\\frac{${inputNum1}}{${inputDen1}} ${symbol1} \\frac{${Math.abs(inputNum2)}}{${inputDen2}}$$</p><p>We have heterogeneous denominators, so we have to find the <a href="https://www.mechamath.com/calculators/least-common-multiple-calculator-mcm/" target="_blank">least common denominador (LCD)</a>.</p><p>In this case, the LCD is ${lcm}</p><p>Now, we multiply both the numerator and denominator by a number that makes the denominator equal to the LCD.</p><p>$$=\\frac{${inputNum1}\\times  ${multiples[0]}}{${inputDen1}\\times ${multiples[0]} }${symbol1}\\frac{${Math.abs(inputNum2)}\\times  ${multiples[1]}}{${inputDen2}\\times ${multiples[1]}}$$</p><p>Multiplying and writing the fractions in simple form, we have:</p><p>$$=\\frac{${newNumerators[0]}}{${lcm}}${symbol1}\\frac{${Math.abs(newNumerators[1])}}{${lcm}}$$</p>`;
+            let answerHomo = `<p>Since we have like denominators, we can join the fractions and add them easily:</p><p>$$=\\frac{${newNumerators[0]}${symbol1}${Math.abs(newNumerators[1])}}{${lcm}}$$</p><p>$$=\\frac{${numeratorFinal}}{${lcm}}$$</p>`
             if (inputDen1 != inputDen2) {
                 finalAnswer = `${answerHeter} ${answerHomo}`;
             } else if (inputDen1 === inputDen2) {
@@ -140,17 +165,6 @@ const addBtn = () => {
         }
         if (numberFractions === 3) {
 
-            let lcm3 = findlcm([parseFloat(inputDen1), parseFloat(inputDen2), parseFloat(inputDen3)], 3);
-            let multiple1 = lcm3 / parseFloat(inputDen1);
-            let multiple2 = lcm3 / parseFloat(inputDen2);
-            let multiple3 = lcm3 / parseFloat(inputDen3);
-            let numerator1 = multiple1 * parseFloat(inputNum1);
-            let numerator2 = multiple2 * parseFloat(inputNum2);
-            let numerator3 = multiple3 * parseFloat(inputNum3);
-            let numeratorFinal = parseFloat(numerator1) + parseFloat(numerator2) + parseFloat(numerator3);
-            let gcdFinal = Math.abs(gcd(numeratorFinal, lcm3));
-            let numFinal = numeratorFinal / gcdFinal;
-            let denFinal = lcm3 / gcdFinal;
             if (numeratorFinal < 0) {
                 simplified = `<p>Simplifying the fraction, we have:</p><p>$$=-\\frac{${Math.abs(numFinal)}}{${denFinal}}$$</p>`
                 finalSolution = `<p style="font-size:20px;">$$=-\\frac{${Math.abs(numFinal)}}{${denFinal}}$$</p>`
@@ -160,8 +174,8 @@ const addBtn = () => {
             if (gcdFinal > 1 && numeratorFinal > 0) {
                 simplified = `<p>Simplifying the fraction, we have:</p><p>$$=\\frac{${Math.abs(numFinal)}}{${denFinal}}$$</p>`
             }
-            let answerHeter = `${step1}<p>$$=\\frac{${inputNum1}}{${inputDen1}} ${symbol1} \\frac{${Math.abs(inputNum2)}}{${inputDen2}} ${symbol2} \\frac{${Math.abs(inputNum3)}}{${inputDen3}}$$</p><p>We have heterogeneous denominators, so we have to find the <a href="https://www.mechamath.com/calculators/least-common-multiple-calculator-mcm/" target="_blank">least common denominador (LCD)</a>.</p><p>In this case, the LCD is ${lcm3}</p><p>Now, we multiply both the numerator and denominator by a number that makes the denominator equal to the LCD.</p><p>$$=\\frac{${inputNum1}\\times  ${multiple1}}{${inputDen1}\\times ${multiple1} }${symbol1}\\frac{${Math.abs(inputNum2)}\\times  ${multiple2}}{${inputDen2}\\times ${multiple2}} ${symbol2}\\frac{${Math.abs(inputNum3)}\\times  ${multiple3}}{${inputDen3}\\times ${multiple3}}$$</p><p>Multiplying and writing the fractions in simple form, we have:</p><p>$$=\\frac{${numerator1}}{${lcm3}}${symbol1}\\frac{${Math.abs(numerator2)}}{${lcm3}} ${symbol2}\\frac{${Math.abs(numerator3)}}{${lcm3}}$$</p>`;
-            let answerHomo = `<p>Since we have like denominators, we can join the fractions and add them easily</p><p>$$=\\frac{${numerator1}${symbol1}${Math.abs(numerator2)}${symbol2}${Math.abs(numerator3)}}{${lcm3}}$$</p><p>$$=\\frac{${numeratorFinal}}{${lcm3}}$$</p>`
+            let answerHeter = `${step1}<p>$$=\\frac{${inputNum1}}{${inputDen1}} ${symbol1} \\frac{${Math.abs(inputNum2)}}{${inputDen2}} ${symbol2} \\frac{${Math.abs(inputNum3)}}{${inputDen3}}$$</p><p>We have heterogeneous denominators, so we have to find the <a href="https://www.mechamath.com/calculators/least-common-multiple-calculator-mcm/" target="_blank">least common denominador (LCD)</a>.</p><p>In this case, the LCD is ${lcm}</p><p>Now, we multiply both the numerator and denominator by a number that makes the denominator equal to the LCD.</p><p>$$=\\frac{${inputNum1}\\times  ${multiples[0]}}{${inputDen1}\\times ${multiples[0]} }${symbol1}\\frac{${Math.abs(inputNum2)}\\times  ${multiples[1]}}{${inputDen2}\\times ${multiples[1]}} ${symbol2}\\frac{${Math.abs(inputNum3)}\\times  ${multiples[2]}}{${inputDen3}\\times ${multiples[2]}}$$</p><p>Multiplying and writing the fractions in simple form, we have:</p><p>$$=\\frac{${newNumerators[0]}}{${lcm}}${symbol1}\\frac{${Math.abs(newNumerators[1])}}{${lcm}} ${symbol2}\\frac{${Math.abs(newNumerators[2])}}{${lcm}}$$</p>`;
+            let answerHomo = `<p>Since we have like denominators, we can join the fractions and add them easily</p><p>$$=\\frac{${newNumerators[0]}${symbol1}${Math.abs(newNumerators[1])}${symbol2}${Math.abs(newNumerators[2])}}{${lcm}}$$</p><p>$$=\\frac{${numeratorFinal}}{${lcm}}$$</p>`
             if (inputDen1 != inputDen2 || inputDen1 != inputDen3) {
                 finalAnswer = `${answerHeter} ${answerHomo}`;
             } else if (inputDen1 === inputDen2 && inputDen1 === inputDen3) {
@@ -170,19 +184,6 @@ const addBtn = () => {
         }
         if (numberFractions === 4) {
 
-            let lcm4 = findlcm([parseFloat(inputDen1), parseFloat(inputDen2), parseFloat(inputDen3), parseFloat(inputDen4)], 4);
-            let multiple1 = lcm4 / parseFloat(inputDen1);
-            let multiple2 = lcm4 / parseFloat(inputDen2);
-            let multiple3 = lcm4 / parseFloat(inputDen3);
-            let multiple4 = lcm4 / parseFloat(inputDen4);
-            let numerator1 = multiple1 * parseFloat(inputNum1);
-            let numerator2 = multiple2 * parseFloat(inputNum2);
-            let numerator3 = multiple3 * parseFloat(inputNum3);
-            let numerator4 = multiple4 * parseFloat(inputNum4);
-            let numeratorFinal = parseFloat(numerator1) + parseFloat(numerator2) + parseFloat(numerator3) + parseFloat(numerator4);
-            let gcdFinal = Math.abs(gcd(numeratorFinal, lcm4));
-            let numFinal = numeratorFinal / gcdFinal;
-            let denFinal = lcm4 / gcdFinal;
             if (numeratorFinal < 0) {
                 simplified = `<p>Simplifying the fraction, we have:</p><p>$$=-\\frac{${Math.abs(numFinal)}}{${denFinal}}$$</p>`
                 finalSolution = `<p style="font-size:20px;">$$=-\\frac{${Math.abs(numFinal)}}{${denFinal}}$$</p>`
@@ -192,8 +193,8 @@ const addBtn = () => {
             if (gcdFinal > 1 && numeratorFinal > 0) {
                 simplified = `<p>Simplifying the fraction, we have:</p><p>$$=\\frac{${Math.abs(numFinal)}}{${denFinal}}$$</p>`
             }
-            let answerHeter = `${step1}<p>$$=\\frac{${inputNum1}}{${inputDen1}} ${symbol1} \\frac{${Math.abs(inputNum2)}}{${inputDen2}} ${symbol2} \\frac{${Math.abs(inputNum3)}}{${inputDen3}}${symbol3} \\frac{${Math.abs(inputNum4)}}{${inputDen4}}$$</p><p>We have heterogeneous denominators, so we have to find the <a href="https://www.mechamath.com/calculators/least-common-multiple-calculator-mcm/" target="_blank">least common denominador (LCD)</a>.</p><p>In this case, the LCD is ${lcm4}</p><p>Now, we multiply both the numerator and denominator by a number that makes the denominator equal to the LCD.</p><p>$$=\\frac{${inputNum1}\\times  ${multiple1}}{${inputDen1}\\times ${multiple1} }${symbol1}\\frac{${Math.abs(inputNum2)}\\times  ${multiple2}}{${inputDen2}\\times ${multiple2}} ${symbol2}\\frac{${Math.abs(inputNum3)}\\times  ${multiple3}}{${inputDen3}\\times ${multiple3}} ${symbol3} \\frac{${Math.abs(inputNum4)}\\times  ${multiple4}}{${inputDen4}\\times ${multiple4}}$$</p><p>Multiplying and writing the fractions in simple form, we have:</p><p>$$=\\frac{${numerator1}}{${lcm4}}${symbol1}\\frac{${Math.abs(numerator2)}}{${lcm4}} ${symbol2}\\frac{${Math.abs(numerator3)}}{${lcm4}} ${symbol3}\\frac{${Math.abs(numerator4)}}{${lcm4}}$$</p>`;
-            let answerHomo = `<p>Since we have like denominators, we can join the fractions and add them easily:</p><p>$$=\\frac{${numerator1}${symbol1}${Math.abs(numerator2)}${symbol2}${Math.abs(numerator3)}${symbol3}${Math.abs(numerator4)}}{${lcm4}}$$</p><p>$$=\\frac{${numeratorFinal}}{${lcm4}}$$</p>`
+            let answerHeter = `${step1}<p>$$=\\frac{${inputNum1}}{${inputDen1}} ${symbol1} \\frac{${Math.abs(inputNum2)}}{${inputDen2}} ${symbol2} \\frac{${Math.abs(inputNum3)}}{${inputDen3}}${symbol3} \\frac{${Math.abs(inputNum4)}}{${inputDen4}}$$</p><p>We have heterogeneous denominators, so we have to find the <a href="https://www.mechamath.com/calculators/least-common-multiple-calculator-mcm/" target="_blank">least common denominador (LCD)</a>.</p><p>In this case, the LCD is ${lcm}</p><p>Now, we multiply both the numerator and denominator by a number that makes the denominator equal to the LCD.</p><p>$$=\\frac{${inputNum1}\\times  ${multiples[0]}}{${inputDen1}\\times ${multiples[0]} }${symbol1}\\frac{${Math.abs(inputNum2)}\\times  ${multiples[1]}}{${inputDen2}\\times ${multiples[1]}} ${symbol2}\\frac{${Math.abs(inputNum3)}\\times  ${multiples[2]}}{${inputDen3}\\times ${multiples[2]}} ${symbol3} \\frac{${Math.abs(inputNum4)}\\times  ${multiples[3]}}{${inputDen4}\\times ${multiples[3]}}$$</p><p>Multiplying and writing the fractions in simple form, we have:</p><p>$$=\\frac{${newNumerators[0]}}{${lcm}}${symbol1}\\frac{${Math.abs(newNumerators[1])}}{${lcm}} ${symbol2}\\frac{${Math.abs(newNumerators[2])}}{${lcm}} ${symbol3}\\frac{${Math.abs(newNumerators[3])}}{${lcm}}$$</p>`;
+            let answerHomo = `<p>Since we have like denominators, we can join the fractions and add them easily:</p><p>$$=\\frac{${newNumerators[0]}${symbol1}${Math.abs(newNumerators[1])}${symbol2}${Math.abs(newNumerators[2])}${symbol3}${Math.abs(newNumerators[3])}}{${lcm}}$$</p><p>$$=\\frac{${numeratorFinal}}{${lcm}}$$</p>`
             if (inputDen1 === inputDen2 === inputDen3 === inputDen4) {
                 finalAnswer = `${answerHomo}`;
             } else {
