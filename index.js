@@ -52,48 +52,66 @@ const addBtn = () => {
     let inputDen3 = parseFloat(document.getElementById("inputDen3").value);
     let inputNum4 = parseFloat(document.getElementById("inputNum4").value);
     let inputDen4 = parseFloat(document.getElementById("inputDen4").value);
+
     // getting the symbols
     let symbol1 = document.getElementById("symbol1").value;
     let symbol2 = document.getElementById("symbol2").value;
     let symbol3 = document.getElementById("symbol3").value;
-    let finalAnswer = 0;
-    let finalSolution = 0;
+
+    let finalAnswer = "";
+    let finalSolution = "";
     let simplified = "";
-    if (parseFloat(inputDen1) === 0 || parseFloat(inputDen2) === 0 || parseFloat(inputDen3) === 0 || parseFloat(inputDen4) === 0) {
+
+    //When any denominator is 0, there is no solution
+    if (inputDen1 === 0 || inputDen2 === 0 || inputDen3 === 0 || inputDen4 === 0) {
         finalSolution = '<p style="color:crimson; text-align:center;">Denominators cannot be 0</p>';
         finalAnswer = "";
     } else {
         let step1 = "";
+
+        //when negative signs in numerator or denominator, show step to simplify them
         if (inputNum2 < 0 || inputDen2 < 0 || inputNum3 < 0 || inputDen3 < 0 || inputNum4 < 0 || inputDen4 < 0) {
-            step1 = `<p>We can simplify the negative signs and write the fraction as follows</p>`
+            step1 = `<p>We can simplify the negative signs and write the fractions as follows</p>`
         } else {
             step1 = "";
         }
-        if (inputDen1 < 0) {
-            inputDen1 = (-1) * (parseFloat(inputDen1));
-            inputNum1 = (-1) * (parseFloat(inputNum1));
+
+        //moving negative sign in denominator to numerator
+        inputNum1 *= inputDen1 < 0 ? -1 : 1;
+        inputDen1 = Math.abs(inputDen1);
+        inputNum2 *= inputDen2 < 0 ? -1 : 1;
+        inputDen2 = Math.abs(inputDen2);
+        inputNum3 *= inputDen3 < 0 ? -1 : 1;
+        inputDen3 = Math.abs(inputDen3);
+        inputNum4 *= inputDen4 < 0 ? -1 : 1;
+        inputDen4 = Math.abs(inputDen4);
+
+
+        //Change signs of numerators and symbols when one is negative
+        if (inputNum2 < 0) {
+            inputNum2 *= (symbol1 === "+") ? 1 : -1;
+            symbol1 = (symbol1 === "+") ? "-" : "+";
+        } else if (inputNum2 > 0) {
+            inputNum2 *= (symbol1 === "+") ? 1 : -1;
         }
-        if (inputDen2 < 0) {
-            inputDen2 = (-1) * (parseFloat(inputDen2));
-            inputNum2 = (-1) * (parseFloat(inputNum2));
+        
+        if (inputNum3 < 0) {
+            inputNum3 *= (symbol2 === "+") ? 1 : -1;
+            symbol2 = (symbol2 === "+") ? "-" : "+";
+        } else if (inputNum3 > 0) {
+            inputNum3 *= (symbol2 === "+") ? 1 : -1;
         }
-        if (inputDen3 < 0) {
-            inputDen3 = (-1) * (parseFloat(inputDen3));
-            inputNum3 = (-1) * (parseFloat(inputNum3));
+
+        if (inputNum4 < 0) {
+            inputNum4 *= (symbol3 === "+") ? 1 : -1;
+            symbol3 = (symbol3 === "+") ? "-" : "+";
+        } else if (inputNum4 > 0) {
+            inputNum4 *= (symbol3 === "+") ? 1 : -1;
         }
-        if (inputDen4 < 0) {
-            inputDen4 = (-1) * (parseFloat(inputDen4));
-            inputNum4 = (-1) * (parseFloat(inputNum4));
-        }
+
+
         if (numberFractions === 2) {
-            if (symbol1 == "+" && inputNum2 < 0) {
-                symbol1 = "-";
-            } else if (symbol1 == "-" && inputNum2 < 0) {
-                symbol1 = "+";
-                inputNum2 = (-1) * (inputNum2);
-            } else if (symbol1 == "-" && inputNum2 > 0) {
-                inputNum2 = (-1) * (inputNum2);
-            }
+
             let lcm2 = findlcm([parseFloat(inputDen1), parseFloat(inputDen2)], 2);
             let multiple1 = lcm2 / parseFloat(inputDen1);
             let multiple2 = lcm2 / parseFloat(inputDen2);
@@ -121,22 +139,7 @@ const addBtn = () => {
             }
         }
         if (numberFractions === 3) {
-            if (symbol1 == "+" && inputNum2 < 0) {
-                symbol1 = "-";
-            } else if (symbol1 == "-" && inputNum2 < 0) {
-                symbol1 = "+";
-                inputNum2 = (-1) * (inputNum2);
-            } else if (symbol1 == "-" && inputNum2 > 0) {
-                inputNum2 = (-1) * (inputNum2);
-            }
-            if (symbol2 == "+" && inputNum3 < 0) {
-                symbol2 = "-";
-            } else if (symbol2 == "-" && inputNum3 < 0) {
-                symbol2 = "+";
-                inputNum3 = (-1) * (inputNum3);
-            } else if (symbol2 == "-" && inputNum3 > 0) {
-                inputNum3 = (-1) * (inputNum3);
-            }
+
             let lcm3 = findlcm([parseFloat(inputDen1), parseFloat(inputDen2), parseFloat(inputDen3)], 3);
             let multiple1 = lcm3 / parseFloat(inputDen1);
             let multiple2 = lcm3 / parseFloat(inputDen2);
@@ -166,30 +169,7 @@ const addBtn = () => {
             }
         }
         if (numberFractions === 4) {
-            if (symbol1 == "+" && inputNum2 < 0) {
-                symbol1 = "-";
-            } else if (symbol1 == "-" && inputNum2 < 0) {
-                symbol1 = "+";
-                inputNum2 = (-1) * (inputNum2);
-            } else if (symbol1 == "-" && inputNum2 > 0) {
-                inputNum2 = (-1) * (inputNum2);
-            }
-            if (symbol2 == "+" && inputNum3 < 0) {
-                symbol2 = "-";
-            } else if (symbol2 == "-" && inputNum3 < 0) {
-                symbol2 = "+";
-                inputNum3 = (-1) * (inputNum3);
-            } else if (symbol2 == "-" && inputNum3 > 0) {
-                inputNum3 = (-1) * (inputNum3);
-            }
-            if (symbol3 == "+" && inputNum4 < 0) {
-                symbol3 = "-";
-            } else if (symbol3 == "-" && inputNum4 < 0) {
-                symbol3 = "+";
-                inputNum4 = (-1) * (inputNum4);
-            } else if (symbol3 == "-" && inputNum4 > 0) {
-                inputNum4 = (-1) * (inputNum4);
-            }
+
             let lcm4 = findlcm([parseFloat(inputDen1), parseFloat(inputDen2), parseFloat(inputDen3), parseFloat(inputDen4)], 4);
             let multiple1 = lcm4 / parseFloat(inputDen1);
             let multiple2 = lcm4 / parseFloat(inputDen2);
