@@ -211,10 +211,20 @@ input[type=number] {
 /* ===== Solutions sections */
 
 .solution-text {
-    text-align: center;
     min-height: 2.5rem;
+    font-size: 1.2rem;
 }
 
+.solution-text p {
+    margin-bottom: 1.2rem;
+}
+
+/* ====== MathJax equations =========*/
+
+mjx-container[jax="CHTML"][display="true"] {
+    overflow-x: auto;
+    overflow-y: hidden;
+}
 
 /* ======== Mobile devices ======= */
 
